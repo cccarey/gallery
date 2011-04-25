@@ -1,8 +1,20 @@
 import web, config
+import os
 
 session = web.config._session
 render = config.render
 
 class root:
     def GET(self):
-        return render.home()
+        # 'test-pics' below needs to be from the user's galleries
+        galleryDir = '%s/galleries/test-pics' % os.getcwd()
+        iterDirs = os.listdir(galleryDir)
+        dirs = []
+        
+        for dir in iterDirs:
+            if os.path.isdir('%s/%s' % (galleryDir, dir)):
+                dirs.append({'name': dir, 'files': os.listdir('%s/%s' % (galleryDir, dir))})
+            else:
+                dirs.append({'name': dir, 'files': []})
+                
+        return render.home(dirs)

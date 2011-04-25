@@ -1,9 +1,17 @@
+$def with (dirs)
 <html>
 	<head>
 		<title>Gallery</title>
 	</head>
 	<body>
 		<h1>Gallery</h1>
-		<p>from template</p>
+		<ul>
+		$for dir in dirs:
+			<li>$dir['name']</li>
+			<ul>
+			$for file in dir['files']:
+				<li>$file</li>
+			</ul>
+		</ul>
 	</body>
 </html>
