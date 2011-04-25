@@ -1,0 +1,18 @@
+$def with (gallery)
+<html>
+	<head>
+		<title>Gallery</title>
+		<script src="/static/js/jquery-1.5.2.min.js"></script>
+	</head>
+	<body>
+		<h1>Gallery</h1>
+		<ul>
+		$for collection in gallery.getCollections():
+			<li>$collection['name']</li>
+			<ul>
+			$for image in gallery.getImages(collection['name']):
+				<li><a href="$image['url']">$image['name']</a></li>
+			</ul>
+		</ul>
+	</body>
+</html>
