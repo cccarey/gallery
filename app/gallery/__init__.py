@@ -17,9 +17,25 @@ class Gallery:
     
     def getImages(self, dir):
         images = []
-        files = os.listdir('%s/%s' % (self.diskPath, dir))
-        files.sort()
-        for file in files:
-            if not os.path.isdir('%s/%s/%s' % (self.diskPath, dir, file)):
-                images.append({'name': file, 'url': '%s/%s/%s' % (self.httpPath, dir, file)})
+        try:
+            files = os.listdir('%s/%s' % (self.diskPath, dir))
+            files.sort()
+            for file in files:
+                if not os.path.isdir('%s/%s/%s' % (self.diskPath, dir, file)):
+                    images.append({'name': file, 'url': '%s/%s/%s' % (self.httpPath, dir, file)})
+        except:
+            pass
         return images
+    
+class Galleries:
+    def __init__(self):
+        self.subPath = 'static/galleries'
+        self.diskPath = '%s/%s' % (os.getcwd(), self.subPath)
+        
+    def getGalleries(self):
+        galleries = []
+        dirs = os.listdir(self.diskPath)
+        for dir in dirs:
+            if os.path.isdir('%s/%s' % (self.diskPath, dir)):
+                galleries.append({'name': dir})
+        return galleries

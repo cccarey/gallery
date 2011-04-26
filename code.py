@@ -11,7 +11,8 @@ os.environ['REAL_SCRIPT_NAME'] = ''
 import web, web.webopenid
 
 URLS = (
-    '/', 'views.home.root'
+    '/', 'views.home.root',
+    '/gallery/(.+)', 'views.gallery.root'
 )
 
 web_app = web.application(URLS, globals())

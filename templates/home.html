@@ -1,17 +1,14 @@
-$def with (dirs)
+$def with (galleries)
 <html>
 	<head>
-		<title>Gallery</title>
+		<title>Galleries</title>
+		<script src="/static/js/jquery-1.5.2.min.js"></script>
 	</head>
 	<body>
-		<h1>Gallery</h1>
+		<h1>Galleries</h1>
 		<ul>
-		$for dir in dirs:
-			<li>$dir['name']</li>
-			<ul>
-			$for file in dir['files']:
-				<li>$file</li>
-			</ul>
+		$for gallery in galleries:
+			<li><a href="gallery/$gallery['name']">$gallery['name']</li>
 		</ul>
 	</body>
 </html>
