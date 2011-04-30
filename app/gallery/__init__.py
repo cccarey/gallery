@@ -3,30 +3,44 @@ import os, mimetypes
 class Gallery:
     def __init__(self, gallery):
         self.gallery = gallery
-        self.subPath = 'static/galleries'
-        self.diskPath = '%s/%s/%s' % (os.getcwd(), self.subPath, self.gallery)
-        self.httpPath = 'http://localhost:8080/%s/%s' % (self.subPath, self.gallery)
-        self.dirs = os.listdir(self.diskPath)
+        self.rootHttpPath = 'http://localhost:8080'
+        self.rootPath = os.getcwd()
+        self.gallerySubPath = 'static/galleries'
+        self.thumbSubPath = 'static/thumbs'
+        # self.diskPath = '%s/%s/%s' % (os.getcwd(), self.subPath, self.gallery)
+        # self.httpPath = 'http://localhost:8080/%s/%s' % (self.subPath, self.gallery)
+        self.dirs = os.listdir(self.getDiskPath())
+
+    def getDiskPath(self, dir=None, file=None, forDisk=True, forThumbs=False):
+        root = self.rootPath if forDisk else self.rootHttpPath
+        path = self.thumbSubPath if forThumbs else self.gallerySubPath
+        pathEle = [root, path, self.gallery]
+        if dir:
+            pathEle.append(dir)
+        if file:
+            pathEle.append(file)
+        
+        return '/'.join(pathEle)
         
     def getCollections(self):
         collections = []
         for dir in self.dirs:
-            if os.path.isdir('%s/%s' % (self.diskPath, dir)):
+            if os.path.isdir(self.getDiskPath(dir)):
                 collections.append({'name': dir})
         return collections
     
     def getImages(self, dir):
         images = []
         try:
-            files = os.listdir('%s/%s' % (self.diskPath, dir))
+            files = os.listdir(self.getDiskPath(dir))
             files.sort()
             for file in files:
-                if not os.path.isdir('%s/%s/%s' % (self.diskPath, dir, file)):
-                    if "image" in mimetypes.guess_type("%s/%s" % (dir, file))[0]:
+                if not os.path.isdir('%s/%s/%s' % (self.getDiskPath(dir, file))):
+                    if "image" in mimetypes.guess_type(self.getDiskPath(dir, file))[0]:
                         images.append({
                             'name': file, 
-                            'image': '%s/%s/%s' % (self.httpPath, dir, file),
-                            'type': mimetypes.guess_type("%s/%s" % (dir, file))[0]
+                            'image': '%s/%s/%s' % (self.getDiskPath(dir, file, True)),
+                            'type': mimetypes.guess_type(self.getDiskPath(dir, file))[0]
                             })
         except:
             pass
