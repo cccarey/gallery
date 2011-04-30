@@ -1,5 +1,4 @@
-import web, config
-import os
+import web, config, os
 
 from app.gallery import Gallery
 
@@ -15,4 +14,3 @@ class root:
             return render.collection(gallery.getImages(collectionName))
         else:
             return render.gallery(Gallery(galleryName))
-    

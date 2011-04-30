@@ -9,20 +9,8 @@ $def with (collection)
 	<body>
 		<div id="images">
 		$for image in collection:
-			<img src="$image['url']" alt="" title="" />
+			<img src="$image['image']" alt="" title="" />
 		</div>				
-		<script type="text/javascript">
-	        $$(document).ready(function() {
-	        	windowHeight = $$(window).height() - 20;
-	        	windowWidth = $$(window).width() - 20;
-				$$('#images').galleria({
-					height: windowHeight, 
-					width: windowWidth, 
-					autoplay: 3000, 
-					transition: 'fade', 
-					transitionSpeed: 1500
-				});
-	        });
-		</script>
+		<script src="/static/js/collection.js"></script>
 	</body>
 </html>

@@ -22,7 +22,7 @@ class Gallery:
             files.sort()
             for file in files:
                 if not os.path.isdir('%s/%s/%s' % (self.diskPath, dir, file)):
-                    images.append({'name': file, 'url': '%s/%s/%s' % (self.httpPath, dir, file)})
+                    images.append({'name': file, 'image': '%s/%s/%s' % (self.httpPath, dir, file)})
         except:
             pass
         return images
