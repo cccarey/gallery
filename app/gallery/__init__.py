@@ -1,4 +1,4 @@
-import os
+import os, mimetypes
 
 class Gallery:
     def __init__(self, gallery):
@@ -22,7 +22,12 @@ class Gallery:
             files.sort()
             for file in files:
                 if not os.path.isdir('%s/%s/%s' % (self.diskPath, dir, file)):
-                    images.append({'name': file, 'image': '%s/%s/%s' % (self.httpPath, dir, file)})
+                    if "image" in mimetypes.guess_type("%s/%s" % (dir, file))[0]:
+                        images.append({
+                            'name': file, 
+                            'image': '%s/%s/%s' % (self.httpPath, dir, file),
+                            'type': mimetypes.guess_type("%s/%s" % (dir, file))[0]
+                            })
         except:
             pass
         return images
