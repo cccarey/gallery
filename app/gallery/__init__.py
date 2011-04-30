@@ -7,9 +7,8 @@ class Gallery:
         self.rootPath = os.getcwd()
         self.gallerySubPath = 'static/galleries'
         self.thumbSubPath = 'static/thumbs'
-        # self.diskPath = '%s/%s/%s' % (os.getcwd(), self.subPath, self.gallery)
-        # self.httpPath = 'http://localhost:8080/%s/%s' % (self.subPath, self.gallery)
         self.dirs = os.listdir(self.getDiskPath())
+        self.dirs.sort()
 
     def getDiskPath(self, dir=None, file=None, forDisk=True, forThumbs=False):
         root = self.rootPath if forDisk else self.rootHttpPath
@@ -35,11 +34,11 @@ class Gallery:
             files = os.listdir(self.getDiskPath(dir))
             files.sort()
             for file in files:
-                if not os.path.isdir('%s/%s/%s' % (self.getDiskPath(dir, file))):
+                if not os.path.isdir(self.getDiskPath(dir, file)):
                     if "image" in mimetypes.guess_type(self.getDiskPath(dir, file))[0]:
                         images.append({
                             'name': file, 
-                            'image': '%s/%s/%s' % (self.getDiskPath(dir, file, True)),
+                            'image': self.getDiskPath(dir, file, forDisk=False),
                             'type': mimetypes.guess_type(self.getDiskPath(dir, file))[0]
                             })
         except:
@@ -54,6 +53,7 @@ class Galleries:
     def getGalleries(self):
         galleries = []
         dirs = os.listdir(self.diskPath)
+        dirs.sort()
         for dir in dirs:
             if os.path.isdir('%s/%s' % (self.diskPath, dir)):
                 galleries.append({'name': dir})
