@@ -36,9 +36,20 @@ class Gallery:
             for file in files:
                 if not os.path.isdir(self.getDiskPath(dir, file)):
                     if "image" in mimetypes.guess_type(self.getDiskPath(dir, file))[0]:
+                        if not os.path.exists(self.getDiskPath(dir, forThumbs=True)):
+                            os.makedirs(self.getDiskPath(dir, forThumbs=True))
+                        if not os.path.exists(self.getDiskPath(dir, file, forThumbs=True)):
+                            ret = os.system(
+                                "convert -resize 5%% '%s' '%s'" % 
+                                    (
+                                        self.getDiskPath(dir, file), 
+                                        self.getDiskPath(dir, file, forThumbs=True)
+                                    )
+                                )
                         images.append({
                             'name': file, 
                             'image': self.getDiskPath(dir, file, forDisk=False),
+                            'thumb': self.getDiskPath(dir, file, forDisk=False, forThumbs=True),
                             'type': mimetypes.guess_type(self.getDiskPath(dir, file))[0]
                             })
         except:

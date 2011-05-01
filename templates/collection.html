@@ -9,7 +9,7 @@ $def with (collection)
 	<body>
 		<div id="images">
 		$for image in collection:
-			<img src="$image['image']" alt="" title="" />
+			<a href="$image['image']"><img src="$image['thumb']" alt="" title="" /></a>
 		</div>				
 		<script src="/static/js/collection.js"></script>
 	</body>
