@@ -3,7 +3,7 @@ import os, mimetypes
 class Gallery:
     def __init__(self, gallery):
         self.gallery = gallery
-        self.rootHttpPath = 'http://localhost:8080'
+        self.rootHttpPath = ''
         self.rootPath = os.getcwd()
         self.gallerySubPath = 'static/galleries'
         self.thumbSubPath = 'static/thumbs'
