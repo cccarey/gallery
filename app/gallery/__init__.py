@@ -34,10 +34,19 @@ class Gallery:
             if os.path.isdir(self.getDiskPath(dir)):
                 collections.append({
                     'name': dir,
-                    'numImages': self.getImageCount(dir)
+                    'numImages': self.getImageCount(dir),
+                    'coverThumb': self.getCoverThumbnail(dir)
                     })
         return collections
     
+    def getCoverThumbnail(self, dir):
+        files = os.listdir(self.getDiskPath(dir))
+        for file in files:
+            if not os.path.isdir(self.getDiskPath(dir, file)):
+                if "cover" in file and os.path.exists(self.getDiskPath(dir, file, forThumbs=True)):
+                    return self.getDiskPath(dir, file, forDisk=False, forThumbs=True)
+        return ""
+        
     def getImageCount(self, dir):
         # getImages is pretty involved... do it simpler (though this is more difficult to maintain)
         images = 0
