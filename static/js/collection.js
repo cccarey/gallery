@@ -4,9 +4,19 @@ $(document).ready(function() {
 	$('#images').galleria({
 			height: windowHeight, 
 			width: windowWidth, 
-			autoplay: 3000, 
 			transition: 'fade', 
-			transitionSpeed: 1500
+			autoplay: 3000,
+			transitionSpeed: 1500,
+			extend: function() {
+			    this.attachKeyboard({
+			        left: this.prev,
+			        right: this.next,
+			        13: function() {
+			            this.play(3000);
+		            },
+			        8: this.pause
+			    });
+			}
 		});
 	gallery = Galleria.get(0);
 });
