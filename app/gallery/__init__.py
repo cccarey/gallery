@@ -20,14 +20,33 @@ class Gallery:
             pathEle.append(file)
         
         return '/'.join(pathEle)
+
+    def getCollectionCount(self):
+        collections = 0
+        for dir in self.dirs:
+            if os.path.isdir(self.getDiskPath(dir)):
+                collections = collections + 1
+        return collections
         
     def getCollections(self):
         collections = []
         for dir in self.dirs:
             if os.path.isdir(self.getDiskPath(dir)):
-                collections.append({'name': dir})
+                collections.append({
+                    'name': dir,
+                    'numImages': self.getImageCount(dir)
+                    })
         return collections
     
+    def getImageCount(self, dir):
+        # getImages is pretty involved... do it simpler (though this is more difficult to maintain)
+        images = 0
+        files = os.listdir(self.getDiskPath(dir))
+        for file in files:
+            if not os.path.isdir(self.getDiskPath(dir, file)):
+                images = images + 1
+        return images
+
     def getImages(self, dir):
         images = []
         try:
@@ -67,5 +86,9 @@ class Galleries:
         dirs.sort()
         for dir in dirs:
             if os.path.isdir('%s/%s' % (self.diskPath, dir)):
-                galleries.append({'name': dir})
+                gallery = Gallery(dir)
+                galleries.append({
+                    'name': dir,
+                    'numCollections': gallery.getCollectionCount()
+                    })
         return galleries

@@ -7,3 +7,5 @@ a { text-decoration: none; color: #bbd2e0; }
 a:visited { color: #787878 }
 a:hover { text-decoration: underline; }
 
+.details { font-size: 70% }
+

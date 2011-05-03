@@ -9,7 +9,10 @@ $def with (gallery)
 		<h1>Gallery</h1>
 		<ul>
 		$for collection in gallery.getCollections():
-			<li><a href="$gallery.gallery/collection/$collection['name']">$collection['name']</li>
+			<li>
+			    <a href="$gallery.gallery/collection/$collection['name']">$collection['name']</a>
+			    <span class="details"> - $collection['numImages'] images</span>
+		    </li>
 		</ul>
 	</body>
 </html>
