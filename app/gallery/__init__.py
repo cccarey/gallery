@@ -26,13 +26,30 @@ class Gallery:
         for dir in self.dirs:
             if os.path.isdir(self.getDiskPath(dir)):
                 gallery = Gallery(dir)
+                counts = gallery.getCounts()
                 galleries.append({
                     'name': dir,
-                    'numCollections': gallery.getCollectionCount(),
-                    'numImages': gallery.getImageCount('')
+                    'numCollections': counts[0],
+                    'numImages': counts[1]
                     })
         return galleries
     
+    def getCounts(self, dir=None):
+        collections = 0
+        images = 0
+        if dir is None:
+            dirs = self.dirs
+        else:
+            dirs = os.listDir(self.getDiskPath(dir))
+        for item in dirs:
+            if os.path.isdir(self.getDiskPath(item)):
+                collections = collections + 1
+            else:
+                mimetype = mimetypes.guess_type(self.getDiskPath(item))[0]
+                if mimetype is not None and "image" in mimetype:
+                    images = images + 1
+        return (collections, images)
+        
     def getCollectionCount(self):
         collections = 0
         for dir in self.dirs:
