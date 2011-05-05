@@ -7,7 +7,7 @@ render = config.render
 
 class root:
     def GET(self, galleryName):
-        if '/' in galleryName:
+        if 'collection' in galleryName:
             collectionName = galleryName.rpartition('/')[2]
             galleryName = galleryName.partition('/')[0]
             gallery = Gallery(galleryName)

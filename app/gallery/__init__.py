@@ -21,6 +21,18 @@ class Gallery:
         
         return '/'.join(pathEle)
 
+    def getGalleries(self):
+        galleries = []
+        for dir in self.dirs:
+            if os.path.isdir(self.getDiskPath(dir)):
+                gallery = Gallery(dir)
+                galleries.append({
+                    'name': dir,
+                    'numCollections': gallery.getCollectionCount(),
+                    'numImages': gallery.getImageCount('')
+                    })
+        return galleries
+    
     def getCollectionCount(self):
         collections = 0
         for dir in self.dirs:
@@ -83,21 +95,4 @@ class Gallery:
         except:
             pass
         return images
-    
-class Galleries:
-    def __init__(self):
-        self.subPath = 'static/galleries'
-        self.diskPath = '%s/%s' % (os.getcwd(), self.subPath)
-        
-    def getGalleries(self):
-        galleries = []
-        dirs = os.listdir(self.diskPath)
-        dirs.sort()
-        for dir in dirs:
-            if os.path.isdir('%s/%s' % (self.diskPath, dir)):
-                gallery = Gallery(dir)
-                galleries.append({
-                    'name': dir,
-                    'numCollections': gallery.getCollectionCount()
-                    })
-        return galleries
+

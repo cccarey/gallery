@@ -9,8 +9,8 @@ $def with (galleries)
 		<h1>Galleries</h1>
 		$for gallery in galleries:
 			<div>
-			    <a href="gallery/$gallery['name']">$gallery['name']</a>
-			    <span class="details"> - $gallery['numCollections'] collections</span>
+			    <a href="gallery/$gallery['name']">$gallery['name']</a><br/>
+			    <span class="details">$gallery['numCollections'] collections<br/>$gallery['numImages'] images</span>
 		    </div>
 	</body>
 </html>
