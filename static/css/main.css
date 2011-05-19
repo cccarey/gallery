@@ -9,3 +9,20 @@ a:hover { text-decoration: underline; }
 
 .details { font-size: 70% }
 
+.item {
+    border: 1px solid #787878;
+    margin: 5px;
+    padding: 10px;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    float: left;
+    min-height: 100px;
+    width: 150px;
+}
+
+span.clear { 
+    display:block;
+    clear:both;
+    font-size:0;
+    line-height:0;
+}
