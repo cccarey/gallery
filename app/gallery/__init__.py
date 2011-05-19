@@ -30,7 +30,8 @@ class Gallery:
                 galleries.append({
                     'name': dir,
                     'numCollections': counts[0],
-                    'numImages': counts[1]
+                    'numImages': counts[1],
+                    'coverThumb': gallery.getGalleryCoverThumbnail()
                     })
         return galleries
     
@@ -44,6 +45,7 @@ class Gallery:
         for item in dirs:
             if os.path.isdir(self.getDiskPath(item)):
                 collections = collections + 1
+                images = images + self.getImageCount(item)
             else:
                 mimetype = mimetypes.guess_type(self.getDiskPath(item))[0]
                 if mimetype is not None and "image" in mimetype:
@@ -68,13 +70,27 @@ class Gallery:
                     })
         return collections
     
+    def getGalleryCoverThumbnail(self):
+        coverThumb = ""
+        for dir in self.dirs:
+            if os.path.isdir(self.getDiskPath(dir)):
+                coverThumb = self.getCoverThumbnail(dir)
+            if len(coverThumb) > 0:
+                return coverThumb
+        return coverThumb
+        
     def getCoverThumbnail(self, dir):
         files = os.listdir(self.getDiskPath(dir))
+        coverThumb = ""
         for file in files:
             if not os.path.isdir(self.getDiskPath(dir, file)):
                 if "cover" in file and os.path.exists(self.getDiskPath(dir, file, forThumbs=True)):
-                    return self.getDiskPath(dir, file, forDisk=False, forThumbs=True)
-        return ""
+                    if "image" in mimetypes.guess_type(self.getDiskPath(dir, file, forThumbs=True))[0]:
+                        coverThumb = self.getDiskPath(dir, file, forDisk=False, forThumbs=True)
+                elif len(coverThumb) == 0 and os.path.exists(self.getDiskPath(dir, file, forThumbs=True)):
+                    if "image" in mimetypes.guess_type(self.getDiskPath(dir, file, forThumbs=True))[0]:
+                        coverThumb = self.getDiskPath(dir, file, forDisk=False, forThumbs=True)
+        return coverThumb
         
     def getImageCount(self, dir):
         # getImages is pretty involved... do it simpler (though this is more difficult to maintain)
@@ -83,6 +99,8 @@ class Gallery:
         for file in files:
             if not os.path.isdir(self.getDiskPath(dir, file)):
                 images = images + 1
+            else:
+                images = images + self.getImageCount("%s/%s" % (dir, file))
         return images
 
     def getImages(self, dir):
