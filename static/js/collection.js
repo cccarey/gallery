@@ -11,10 +11,10 @@ $(document).ready(function() {
 			    this.attachKeyboard({
 			        left: this.prev,
 			        right: this.next,
-			        13: function() {
+			        up: function() {
 			            this.play(3000);
 		            },
-			        8: this.pause
+			        down: this.pause
 			    });
 			}
 		});
