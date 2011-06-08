@@ -11,7 +11,7 @@ $def with (gallery)
 			<div class="item">
 			    <a href="$gallery.gallery/collection/$collection['name']">$collection['name']</a>
 			    <span class="clear"></span>
-			    <span class="details">$collection['numImages'] images</span>
+			    <span class="details">$collection['numImages'] images<br/>$collection['lastUpdateFmt']</span>
 			    <span class="clear"></span>
 			    $if collection['coverThumb'] != "":
     			    <img src="$collection['coverThumb']" alt="" title="" />

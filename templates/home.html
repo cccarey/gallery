@@ -10,7 +10,7 @@ $def with (galleries)
 		$for gallery in galleries:
 			<div class="item">
 			    <a href="gallery/$gallery['name']">$gallery['name']</a><span class="clear"></span>
-			    <span class="details">$gallery['numCollections'] collections<br/>$gallery['numImages'] images</span><span class="clear"></span>
+			    <span class="details">$gallery['numCollections'] collections<br/>$gallery['numImages'] images<br/>$gallery['lastUpdate']</span><span class="clear"></span>
 			    $if gallery['coverThumb'] != "":
     			    <img src="$gallery['coverThumb']" alt="" title="" />
 			    

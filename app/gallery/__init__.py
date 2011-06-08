@@ -1,4 +1,4 @@
-import os, mimetypes
+import os, mimetypes, datetime
 
 class Gallery:
     def __init__(self, gallery):
@@ -31,13 +31,15 @@ class Gallery:
                     'name': dir,
                     'numCollections': counts[0],
                     'numImages': counts[1],
-                    'coverThumb': gallery.getGalleryCoverThumbnail()
+                    'coverThumb': gallery.getGalleryCoverThumbnail(),
+                    'lastUpdate': counts[2]
                     })
         return galleries
     
     def getCounts(self, dir=None):
         collections = 0
         images = 0
+        lastUpdate = None
         if dir is None:
             dirs = self.dirs
         else:
@@ -46,11 +48,15 @@ class Gallery:
             if os.path.isdir(self.getDiskPath(item)):
                 collections = collections + 1
                 images = images + self.getImageCount(item)
+                updated = datetime.datetime.fromtimestamp(os.path.getmtime(self.getDiskPath(item)))
+                if lastUpdate is None or lastUpdate < updated:
+                    lastUpdate = updated
             else:
                 mimetype = mimetypes.guess_type(self.getDiskPath(item))[0]
                 if mimetype is not None and "image" in mimetype:
                     images = images + 1
-        return (collections, images)
+        lastUpdateFmt = lastUpdate.strftime("%x %X")
+        return (collections, images, lastUpdateFmt)
         
     def getCollectionCount(self):
         collections = 0
@@ -66,7 +72,8 @@ class Gallery:
                 collections.append({
                     'name': dir,
                     'numImages': self.getImageCount(dir),
-                    'coverThumb': self.getCoverThumbnail(dir)
+                    'coverThumb': self.getCoverThumbnail(dir),
+                    'lastUpdateFmt': datetime.datetime.fromtimestamp(os.path.getmtime(self.getDiskPath(dir))).strftime("%x %X")
                     })
         return collections
     
