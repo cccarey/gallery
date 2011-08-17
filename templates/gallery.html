@@ -7,6 +7,7 @@ $def with (gallery)
 	</head>
 	<body>
 		<h1>Gallery</h1>
+		<h2><a href="../..">Home</a></h2>
 		$for collection in gallery.getCollections():
 			<div class="item">
 			    <a href="$gallery.gallery/collection/$collection['name']">$collection['name']</a>
@@ -16,6 +17,7 @@ $def with (gallery)
     			<span class="clear"></span>
 			    <span class="details">$collection['numImages'] images<br/>$collection['lastUpdateFmt']</span>
 			    <span class="clear"></span>
+			    <a href="$gallery.gallery/collection/simple/$collection['name']/">Simple</a>
 		    </div>
 	</body>
 </html>

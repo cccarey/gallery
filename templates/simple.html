@@ -1,0 +1,26 @@
+$def with (collection, image, previousImage, nextImage)
+<html>
+	<head>
+		<title>Simple Collection</title>
+		<link rel="stylesheet" href="/static/css/main.css" type="text/css" media="screen" />
+		<script src="/static/js/jquery-1.5.2.min.js"></script>
+	</head>
+	<body>
+	    <div id="image">
+	        <img class="center" src="$image" alt="" title=""/>
+        </div>
+        <div id="navigation" style="text-align: center; font-size: 200%;">
+	        $if previousImage is None:
+	            &lt; Previous
+            $else:
+                <a id="previous" href="../$collection/$previousImage">&lt; Previous</a>
+            |
+            <a href="../../..">Gallery</a> |
+            $if nextImage is None:
+                Next &gt;
+            $else:
+	            <a id="next" href="../$collection/$nextImage">Next &gt;</a>
+        </div>
+		<script src="/static/js/simple.js"></script>
+	</body>
+</html>

@@ -26,6 +26,19 @@ img.center {
     display: block;
 }
 
+div#image {
+    height:90%;
+}
+
+div#image img {
+    height:100%;
+}
+
+div#navigation {
+    text-align: center;
+    font-size: 200%;    
+}
+
 span.clear { 
     display:block;
     clear:both;

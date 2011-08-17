@@ -122,7 +122,7 @@ class Gallery:
                             os.makedirs(self.getDiskPath(dir, forThumbs=True))
                         if not os.path.exists(self.getDiskPath(dir, file, forThumbs=True)):
                             ret = os.system(
-                                "convert -resize 5%% '%s' '%s'" % 
+                                "convert -resize 10%% '%s' '%s'" % 
                                     (
                                         self.getDiskPath(dir, file), 
                                         self.getDiskPath(dir, file, forThumbs=True)
@@ -137,4 +137,40 @@ class Gallery:
         except:
             pass
         return images
+
+    def getPreviousImage(self, dir, currentImage=None):
+        if currentImage is None:
+            return None
+        setNext = False
+        try:
+            files = os.listdir(self.getDiskPath(dir))
+            files.sort()
+            files.reverse()
+            for file in files:
+                if not os.path.isdir(self.getDiskPath(dir, file)):
+                    if "image" in mimetypes.guess_type(self.getDiskPath(dir, file))[0]:
+                        if setNext is True:
+                            return file
+                        else:
+                            setNext = (currentImage == file)
+        except:
+            pass
+        return None
+                                        
+    def getNextImage(self, dir, currentImage=None):
+        setNext = (currentImage is None)
+        try:
+            files = os.listdir(self.getDiskPath(dir))
+            files.sort()
+            for file in files:
+                if not os.path.isdir(self.getDiskPath(dir, file)):
+                    if "image" in mimetypes.guess_type(self.getDiskPath(dir, file))[0]:
+                        if setNext is True:
+                            return file
+                        else:
+                            if currentImage == file:
+                                setNext = True
+        except:
+            pass
+        return None
 
