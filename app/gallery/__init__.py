@@ -55,7 +55,11 @@ class Gallery:
                 mimetype = mimetypes.guess_type(self.getDiskPath(item))[0]
                 if mimetype is not None and "image" in mimetype:
                     images = images + 1
-        lastUpdateFmt = lastUpdate.strftime("%x %X")
+        if lastUpdate is None:
+            # the gallery is empty
+            lastUpdateFmt = "Never"
+        else:
+            lastUpdateFmt = lastUpdate.strftime("%x %X")
         return (collections, images, lastUpdateFmt)
         
     def getCollectionCount(self):
@@ -122,7 +126,7 @@ class Gallery:
                             os.makedirs(self.getDiskPath(dir, forThumbs=True))
                         if not os.path.exists(self.getDiskPath(dir, file, forThumbs=True)):
                             ret = os.system(
-                                "convert -resize 10%% '%s' '%s'" % 
+                                "convert -resize 20%% '%s' '%s'" % 
                                     (
                                         self.getDiskPath(dir, file), 
                                         self.getDiskPath(dir, file, forThumbs=True)
