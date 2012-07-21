@@ -17,15 +17,17 @@ URLS = (
 
 web_app = web.application(URLS, globals())
 
+'''
 if web.config.get('_session') is None:
     session = web.session.Session(web_app, web.session.DiskStore('sessions'), {'count':0})
     web.config._session = session
 else:
     session = web.config._session
-    
-# import config
-# from config.updateDB import UpdateDB
-# dbUpdate = UpdateDB(config.db)
+ 
+import config
+from config.updateDB import UpdateDB
+dbUpdate = UpdateDB(config.db)
+'''
     
 if __name__ == "__main__": 
     web_app.run()
