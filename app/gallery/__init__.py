@@ -1,14 +1,14 @@
 import os, mimetypes, datetime, PythonMagick
 
-from config import thumb_width
+from config import thumb_width, BASEDIR, IMAGE_PATHS
 
 class Gallery:
     def __init__(self, gallery):
         self.gallery = gallery
-        self.rootHttpPath = ''
+        self.rootHttpPath = BASEDIR
         self.rootPath = os.getcwd()
-        self.gallerySubPath = 'static/galleries'
-        self.thumbSubPath = 'static/thumbs'
+        self.gallerySubPath = IMAGE_PATHS['galleries']
+        self.thumbSubPath = IMAGE_PATHS['thumbs']
         self.dirs = os.listdir(self.getDiskPath())
         self.dirs.sort()
 

@@ -2,8 +2,8 @@ $def with (collection, image, previousImage, nextImage)
 <html>
 	<head>
 		<title>Simple Collection</title>
-		<link rel="stylesheet" href="/$basedir/static/css/main.css" type="text/css" media="screen" />
-		<script src="/$basedir/static/js/jquery-1.5.2.min.js"></script>
+		<link rel="stylesheet" href="${basedir}/static/css/main.css" type="text/css" media="screen" />
+		<script src="${basedir}/static/js/jquery-1.5.2.min.js"></script>
 	</head>
 	<body>
 	    <div id="image">
@@ -21,6 +21,6 @@ $def with (collection, image, previousImage, nextImage)
             $else:
 	            <a id="next" href="../$collection/$nextImage">Next &gt;</a>
         </div>
-		<script src="/$basedir/static/js/simple.js"></script>
+		<script src="${basedir}/static/js/simple.js"></script>
 	</body>
 </html>
