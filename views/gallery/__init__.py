@@ -5,29 +5,29 @@ from app.gallery import Gallery
 render = config.render
 
 class root:
-    def GET(self, galleryName):
-        gallerySplit = galleryName.split('/')
-        if 'collection' in gallerySplit:
-            if 'simple' in gallerySplit:
-                collectionName = gallerySplit[3]
+    def GET(self, gallery_name):
+        gallery_split = gallery_name.split('/')
+        if 'collection' in gallery_split:
+            if 'simple' in gallery_split:
+                collection_name = gallery_split[3]
             else:
-                collectionName = gallerySplit[2]
-            galleryName = gallerySplit[0]
+                collection_name = gallery_split[2]
+            gallery_name = gallery_split[0]
         
-        gallery = Gallery(galleryName)
+        gallery = Gallery(gallery_name)
         
-        if 'simple' in gallerySplit:
-            if len(gallerySplit[4]) == 0:
-                currentImage = gallery.getNextImage(collectionName)
+        if 'simple' in gallery_split:
+            if len(gallery_split[4]) == 0:
+                current_image = gallery.get_next_image(collection_name)
             else:
-                currentImage = gallerySplit[4]
+                current_image = gallery_split[4]
             return render.simple(
-                collectionName,
-                gallery.getDiskPath(collectionName, currentImage, forDisk=False), 
-                gallery.getPreviousImage(collectionName, currentImage), 
-                gallery.getNextImage(collectionName, currentImage)
+                collection_name,
+                gallery.get_disk_path(collection_name, current_image, for_disk=False), 
+                gallery.get_previous_image(collection_name, current_image), 
+                gallery.get_next_image(collection_name, current_image)
                 )
-        elif 'collection' in gallerySplit:
-            return render.collection(gallery.getImages(collectionName))
+        elif 'collection' in gallery_split:
+            return render.collection(gallery.get_images(collection_name))
         else:
             return render.gallery(gallery)

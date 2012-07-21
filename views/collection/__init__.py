@@ -6,7 +6,7 @@ from app.gallery import Gallery
 render = config.render
 
 class root:
-    def GET(self, galleryName, collection):
-        gallery = Gallery(galleryName)
-        return render.collection(gallery.getImages(collection))
+    def GET(self, gallery_name, collection):
+        gallery = Gallery(gallery_name)
+        return render.collection(gallery.get_images(collection))
     

@@ -1,20 +1,16 @@
 import os, mimetypes, datetime, PythonMagick
 
-from config import thumb_width, BASEDIR, IMAGE_PATHS
+from config import THUMB_WIDTH, BASEDIR, IMAGE_PATHS
 
 class Gallery:
     def __init__(self, gallery):
         self.gallery = gallery
-        self.rootHttpPath = BASEDIR
-        self.rootPath = os.getcwd()
-        self.gallerySubPath = IMAGE_PATHS['galleries']
-        self.thumbSubPath = IMAGE_PATHS['thumbs']
-        self.dirs = os.listdir(self.getDiskPath())
+        self.dirs = os.listdir(self.get_disk_path())
         self.dirs.sort()
 
-    def getDiskPath(self, dir=None, file=None, forDisk=True, forThumbs=False):
-        root = self.rootPath if forDisk else self.rootHttpPath
-        path = self.thumbSubPath if forThumbs else self.gallerySubPath
+    def get_disk_path(self, dir=None, file=None, for_disk=True, for_thumbs=False):
+        root = os.getcwd() if for_disk else BASEDIR
+        path = IMAGE_PATHS['thumbs'] if for_thumbs else IMAGE_PATHS['galleries']
         pathEle = [root, path, self.gallery]
         if dir:
             pathEle.append(dir)
@@ -23,155 +19,155 @@ class Gallery:
         
         return '/'.join(pathEle)
 
-    def getGalleries(self):
+    def get_galleries(self):
         galleries = []
         for dir in self.dirs:
-            if os.path.isdir(self.getDiskPath(dir)):
+            if os.path.isdir(self.get_disk_path(dir)):
                 gallery = Gallery(dir)
-                counts = gallery.getCounts()
+                counts = gallery.get_counts()
                 galleries.append({
                     'name': dir,
-                    'numCollections': counts[0],
-                    'numImages': counts[1],
-                    'coverThumb': gallery.getGalleryCoverThumbnail(),
-                    'lastUpdate': counts[2]
+                    'num_collections': counts[0],
+                    'num_images': counts[1],
+                    'cover_thumb': gallery.get_gallery_cover_thumbnail(),
+                    'last_update': counts[2]
                     })
         return galleries
     
-    def getCounts(self, dir=None):
+    def get_counts(self, dir=None):
         collections = 0
         images = 0
-        lastUpdate = None
+        last_update = None
         if dir is None:
             dirs = self.dirs
         else:
-            dirs = os.listDir(self.getDiskPath(dir))
+            dirs = os.listDir(self.get_disk_path(dir))
         for item in dirs:
-            if os.path.isdir(self.getDiskPath(item)):
+            if os.path.isdir(self.get_disk_path(item)):
                 collections = collections + 1
-                images = images + self.getImageCount(item)
-                updated = datetime.datetime.fromtimestamp(os.path.getmtime(self.getDiskPath(item)))
-                if lastUpdate is None or lastUpdate < updated:
-                    lastUpdate = updated
+                images = images + self.get_image_count(item)
+                updated = datetime.datetime.fromtimestamp(os.path.getmtime(self.get_disk_path(item)))
+                if last_update is None or last_update < updated:
+                    last_update = updated
             else:
-                mimetype = mimetypes.guess_type(self.getDiskPath(item))[0]
+                mimetype = mimetypes.guess_type(self.get_disk_path(item))[0]
                 if mimetype is not None and "image" in mimetype:
                     images = images + 1
-        if lastUpdate is None:
+        if last_update is None:
             # the gallery is empty
-            lastUpdateFmt = "Never"
+            last_updateFmt = "Never"
         else:
-            lastUpdateFmt = lastUpdate.strftime("%x %X")
-        return (collections, images, lastUpdateFmt)
+            last_updateFmt = last_update.strftime("%x %X")
+        return (collections, images, last_updateFmt)
         
-    def getCollectionCount(self):
+    def get_collection_count(self):
         collections = 0
         for dir in self.dirs:
-            if os.path.isdir(self.getDiskPath(dir)):
+            if os.path.isdir(self.get_disk_path(dir)):
                 collections = collections + 1
         return collections
         
-    def getCollections(self):
+    def get_collections(self):
         collections = []
         for dir in self.dirs:
-            if os.path.isdir(self.getDiskPath(dir)):
+            if os.path.isdir(self.get_disk_path(dir)):
                 collections.append({
                     'name': dir,
-                    'numImages': self.getImageCount(dir),
-                    'coverThumb': self.getCoverThumbnail(dir),
-                    'lastUpdateFmt': datetime.datetime.fromtimestamp(os.path.getmtime(self.getDiskPath(dir))).strftime("%x %X")
+                    'num_images': self.get_image_count(dir),
+                    'cover_thumb': self.get_cover_thumbnail(dir),
+                    'last_update_fmt': datetime.datetime.fromtimestamp(os.path.getmtime(self.get_disk_path(dir))).strftime("%x %X")
                     })
         return collections
     
-    def getGalleryCoverThumbnail(self):
-        coverThumb = ""
+    def get_gallery_cover_thumbnail(self):
+        cover_thumb = ""
         for dir in self.dirs:
-            if os.path.isdir(self.getDiskPath(dir)):
-                coverThumb = self.getCoverThumbnail(dir)
-            if len(coverThumb) > 0:
-                return coverThumb
-        return coverThumb
+            if os.path.isdir(self.get_disk_path(dir)):
+                cover_thumb = self.get_cover_thumbnail(dir)
+            if len(cover_thumb) > 0:
+                return cover_thumb
+        return cover_thumb
         
-    def getCoverThumbnail(self, dir):
-        files = os.listdir(self.getDiskPath(dir))
-        coverThumb = ""
+    def get_cover_thumbnail(self, dir):
+        files = os.listdir(self.get_disk_path(dir))
+        cover_thumb = ""
         for file in files:
-            if not os.path.isdir(self.getDiskPath(dir, file)):
-                if "cover" in file and os.path.exists(self.getDiskPath(dir, file, forThumbs=True)):
-                    if "image" in mimetypes.guess_type(self.getDiskPath(dir, file, forThumbs=True))[0]:
-                        coverThumb = self.getDiskPath(dir, file, forDisk=False, forThumbs=True)
-                elif len(coverThumb) == 0 and os.path.exists(self.getDiskPath(dir, file, forThumbs=True)):
-                    if "image" in mimetypes.guess_type(self.getDiskPath(dir, file, forThumbs=True))[0]:
-                        coverThumb = self.getDiskPath(dir, file, forDisk=False, forThumbs=True)
-        return coverThumb
+            if not os.path.isdir(self.get_disk_path(dir, file)):
+                if "cover" in file and os.path.exists(self.get_disk_path(dir, file, for_thumbs=True)):
+                    if "image" in mimetypes.guess_type(self.get_disk_path(dir, file, for_thumbs=True))[0]:
+                        cover_thumb = self.get_disk_path(dir, file, for_disk=False, for_thumbs=True)
+                elif len(cover_thumb) == 0 and os.path.exists(self.get_disk_path(dir, file, for_thumbs=True)):
+                    if "image" in mimetypes.guess_type(self.get_disk_path(dir, file, for_thumbs=True))[0]:
+                        cover_thumb = self.get_disk_path(dir, file, for_disk=False, for_thumbs=True)
+        return cover_thumb
         
-    def getImageCount(self, dir):
-        # getImages is pretty involved... do it simpler (though this is more difficult to maintain)
+    def get_image_count(self, dir):
+        # get_images is pretty involved... do it simpler (though this is more difficult to maintain)
         images = 0
-        files = os.listdir(self.getDiskPath(dir))
+        files = os.listdir(self.get_disk_path(dir))
         for file in files:
-            if not os.path.isdir(self.getDiskPath(dir, file)):
+            if not os.path.isdir(self.get_disk_path(dir, file)):
                 images = images + 1
             else:
-                images = images + self.getImageCount("%s/%s" % (dir, file))
+                images = images + self.get_image_count("%s/%s" % (dir, file))
         return images
 
-    def getImages(self, dir):
+    def get_images(self, dir):
         images = []
         try:
-            files = os.listdir(self.getDiskPath(dir))
+            files = os.listdir(self.get_disk_path(dir))
             files.sort()
             for file in files:
-                if not os.path.isdir(self.getDiskPath(dir, file)):
-                    if "image" in mimetypes.guess_type(self.getDiskPath(dir, file))[0]:
-                        if not os.path.exists(self.getDiskPath(dir, forThumbs=True)):
-                            os.makedirs(self.getDiskPath(dir, forThumbs=True))
-                        if not os.path.exists(self.getDiskPath(dir, file, forThumbs=True)):
-                            source_image = PythonMagick.Image(self.getDiskPath(dir, file).encode("ascii", "ignore"))
-                            source_image.transform("%s" % thumb_width)
-                            source_image.write(self.getDiskPath(dir, file, forThumbs=True).encode("ascii", "ignore"))
+                if not os.path.isdir(self.get_disk_path(dir, file)):
+                    if "image" in mimetypes.guess_type(self.get_disk_path(dir, file))[0]:
+                        if not os.path.exists(self.get_disk_path(dir, for_thumbs=True)):
+                            os.makedirs(self.get_disk_path(dir, for_thumbs=True))
+                        if not os.path.exists(self.get_disk_path(dir, file, for_thumbs=True)):
+                            source_image = PythonMagick.Image(self.get_disk_path(dir, file).encode("ascii", "ignore"))
+                            source_image.transform("%s" % THUMB_WIDTH)
+                            source_image.write(self.get_disk_path(dir, file, for_thumbs=True).encode("ascii", "ignore"))
                         images.append({
                             'name': file, 
-                            'image': self.getDiskPath(dir, file, forDisk=False),
-                            'thumb': self.getDiskPath(dir, file, forDisk=False, forThumbs=True),
-                            'type': mimetypes.guess_type(self.getDiskPath(dir, file))[0]
+                            'image': self.get_disk_path(dir, file, for_disk=False),
+                            'thumb': self.get_disk_path(dir, file, for_disk=False, for_thumbs=True),
+                            'type': mimetypes.guess_type(self.get_disk_path(dir, file))[0]
                             })
         except:
             raise
         return images
 
-    def getPreviousImage(self, dir, currentImage=None):
-        if currentImage is None:
+    def get_previous_image(self, dir, current_image=None):
+        if current_image is None:
             return None
-        setNext = False
+        set_next = False
         try:
-            files = os.listdir(self.getDiskPath(dir))
+            files = os.listdir(self.get_disk_path(dir))
             files.sort()
             files.reverse()
             for file in files:
-                if not os.path.isdir(self.getDiskPath(dir, file)):
-                    if "image" in mimetypes.guess_type(self.getDiskPath(dir, file))[0]:
-                        if setNext is True:
+                if not os.path.isdir(self.get_disk_path(dir, file)):
+                    if "image" in mimetypes.guess_type(self.get_disk_path(dir, file))[0]:
+                        if set_next is True:
                             return file
                         else:
-                            setNext = (currentImage == file)
+                            set_next = (current_image == file)
         except:
             pass
         return None
                                         
-    def getNextImage(self, dir, currentImage=None):
-        setNext = (currentImage is None)
+    def get_next_image(self, dir, current_image=None):
+        set_next = (current_image is None)
         try:
-            files = os.listdir(self.getDiskPath(dir))
+            files = os.listdir(self.get_disk_path(dir))
             files.sort()
             for file in files:
-                if not os.path.isdir(self.getDiskPath(dir, file)):
-                    if "image" in mimetypes.guess_type(self.getDiskPath(dir, file))[0]:
-                        if setNext is True:
+                if not os.path.isdir(self.get_disk_path(dir, file)):
+                    if "image" in mimetypes.guess_type(self.get_disk_path(dir, file))[0]:
+                        if set_next is True:
                             return file
                         else:
-                            if currentImage == file:
-                                setNext = True
+                            if current_image == file:
+                                set_next = True
         except:
             pass
         return None

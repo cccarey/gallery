@@ -8,14 +8,17 @@ $def with (gallery)
 	<body>
 		<h1>Gallery</h1>
 		<h2><a href="${basedir}">Home</a></h2>
-		$for collection in gallery.getCollections():
+		$for collection in gallery.get_collections():
 			<div class="item">
 			    <a href="$gallery.gallery/collection/$collection['name']">$collection['name']</a>
 			    <span class="clear"></span>
-			    $if collection['coverThumb'] != "":
-    			    <img class="center" src="$collection['coverThumb']" alt="" title="" />
+			    $if collection['cover_thumb'] != "":
+    			    <img class="center" src="$collection['cover_thumb']" alt="" title="" />
     			<span class="clear"></span>
-			    <span class="details">$collection['numImages'] images<br/>$collection['lastUpdateFmt']</span>
+			    <span class="details">
+			        $collection['num_images'] images<br/>
+			        $collection['last_update_fmt']
+		        </span>
 			    <span class="clear"></span>
 			    <a href="$gallery.gallery/collection/simple/$collection['name']/">Simple</a>
 		    </div>

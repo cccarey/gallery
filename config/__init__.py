@@ -9,4 +9,4 @@ IMAGE_PATHS = {
     'thumbs': 'static/thumbs'
 }
 
-thumb_width = 125
+THUMB_WIDTH = 125
