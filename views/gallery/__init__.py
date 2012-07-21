@@ -2,7 +2,6 @@ import web, config, os
 
 from app.gallery import Gallery
 
-session = web.config._session
 render = config.render
 
 class root:

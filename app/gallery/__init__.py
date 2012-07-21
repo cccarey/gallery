@@ -1,4 +1,6 @@
-import os, mimetypes, datetime
+import os, mimetypes, datetime, PythonMagick
+
+from config import thumb_width
 
 class Gallery:
     def __init__(self, gallery):
@@ -125,13 +127,9 @@ class Gallery:
                         if not os.path.exists(self.getDiskPath(dir, forThumbs=True)):
                             os.makedirs(self.getDiskPath(dir, forThumbs=True))
                         if not os.path.exists(self.getDiskPath(dir, file, forThumbs=True)):
-                            ret = os.system(
-                                "convert -resize 20%% '%s' '%s'" % 
-                                    (
-                                        self.getDiskPath(dir, file), 
-                                        self.getDiskPath(dir, file, forThumbs=True)
-                                    )
-                                )
+                            source_image = PythonMagick.Image(self.getDiskPath(dir, file).encode("ascii", "ignore"))
+                            source_image.transform("%s" % thumb_width)
+                            source_image.write(self.getDiskPath(dir, file, forThumbs=True).encode("ascii", "ignore"))
                         images.append({
                             'name': file, 
                             'image': self.getDiskPath(dir, file, forDisk=False),
@@ -139,7 +137,7 @@ class Gallery:
                             'type': mimetypes.guess_type(self.getDiskPath(dir, file))[0]
                             })
         except:
-            pass
+            raise
         return images
 
     def getPreviousImage(self, dir, currentImage=None):
