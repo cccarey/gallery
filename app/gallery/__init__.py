@@ -9,7 +9,7 @@ class Gallery:
         self.dirs.sort()
 
     def get_disk_path(self, dir=None, file=None, for_disk=True, for_thumbs=False):
-        root = os.getcwd() if for_disk else BASEDIR
+        root = IMAGE_PATHS['disk_root'] if for_disk else IMAGE_PATHS['http_root']
         path = IMAGE_PATHS['thumbs'] if for_thumbs else IMAGE_PATHS['galleries']
         pathEle = [root, path, self.gallery]
         if dir:

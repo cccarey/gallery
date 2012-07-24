@@ -5,8 +5,10 @@ BASEDIR = '/..'
 render = web.template.render('templates', globals={ 'basedir': BASEDIR })
 
 IMAGE_PATHS = {
-    'galleries': 'static/galleries',
-    'thumbs': 'static/thumbs'
+    'disk_root': '/var/www/gallery-pics',
+    'http_root': 'http://localhost/gallery-pics',
+    'galleries': 'galleries',
+    'thumbs': 'thumbs'
 }
 
 THUMB_WIDTH = 125
