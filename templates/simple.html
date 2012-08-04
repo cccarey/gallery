@@ -1,4 +1,4 @@
-$def with (collection, image, previous_image, next_image)
+$def with (gallery, collection, image, previous_image, next_image)
 <html>
 	<head>
 		<title>Simple Collection</title>
@@ -13,13 +13,13 @@ $def with (collection, image, previous_image, next_image)
 	        $if previous_image is None:
 	            &lt; Previous
             $else:
-                <a id="previous" href="../$collection/$previous_image">&lt; Previous</a>
+                <a id="previous" href="${basedir}/gallery/${gallery}/collection/simple/$collection/$previous_image">&lt; Previous</a>
             |
-            <a href="../../..">Gallery</a> |
+            <a href="${basedir}/gallery/${gallery}">Gallery</a> |
             $if next_image is None:
                 Next &gt;
             $else:
-	            <a id="next" href="../$collection/$next_image">Next &gt;</a>
+	            <a id="next" href="${basedir}/gallery/${gallery}/collection/simple/$collection/$next_image">Next &gt;</a>
         </div>
 		<script src="${basedir}/static/js/simple.js"></script>
 	</body>

@@ -11,7 +11,7 @@ $def with (gallery)
 		<h2><a href="${basedir}">Home</a></h2>
 		$for collection in gallery.get_collections():
 			<div class="item">
-			    <a href="$gallery.gallery/collection/$collection['name']">$collection['name']</a>
+			    $collection['name']
 			    <span class="clear"></span>
 			    $if collection['cover_thumb'] != "":
     			    <img class="center" src="$collection['cover_thumb']" alt="" title="" />
@@ -21,7 +21,9 @@ $def with (gallery)
 			        $collection['last_update_fmt']
 		        </span>
 			    <span class="clear"></span>
-			    <a href="$gallery.gallery/collection/simple/$collection['name']/">Simple</a>
+			    <a href="$gallery.gallery/collection/$collection['name']">Slideshow</a>
+			    <a href="$gallery.gallery/collection/simple/$collection['name']">Simple Nav</a>
+			    <a href="$gallery.gallery/collection/collage/$collection['name']/">Collage</a>
 		    </div>
 	</body>
 </html>

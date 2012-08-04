@@ -1,0 +1,15 @@
+$def with (gallery, collection)
+<html>
+	<head>
+		<title>Collection</title>
+		<link rel="stylesheet" href="${basedir}/static/css/main.css" type="text/css" media="screen" />
+	</head>
+	<body>
+	    <h1>Gallery</h1>
+	    <h2><a href="${basedir}/gallery/${gallery}">${gallery}</a></h2>
+		<div id="images">
+		$for image in collection:
+			<a href="$image['image']"><img src="$image['thumb']" alt="" title="" /></a>
+		</div>				
+	</body>
+</html>
