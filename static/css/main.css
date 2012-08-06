@@ -10,14 +10,28 @@ a:hover { text-decoration: underline; }
 .details { font-size: 70%; }
 
 .item {
+    float: left;
+    min-height: 100px;
+    width: 125px;
+}
+
+.item, .box {
     border: 1px solid #787878;
     margin: 5px;
     padding: 10px;
     border-radius: 5px;
     -moz-border-radius: 5px;
-    float: left;
-    min-height: 100px;
-    width: 125px;
+}
+
+.label {
+    font-size: 80%;
+    font-weight: bolder;
+    display: block;
+}
+
+.value {
+    padding-top: 5px;
+    padding-bottom: 5px;
 }
 
 img.center {
@@ -39,9 +53,67 @@ div#navigation {
     font-size: 200%;    
 }
 
+div#collage {
+    position:absolute; 
+    top: 120px; 
+    bottom: 0;
+    width: 99%;
+}
+
+div#collage div#images {
+    min-height: 480px; 
+    height: 100%; 
+    overflow: auto;
+}
+
+div#collage div#image-details {
+    height: 100%;
+}
+
+#collage #images .thumb {
+    opacity: 0.8;
+    padding: 5px;
+    
+}
+
+#collage #images .highlight {
+    opacity: 1;
+}
+
+#collage #image-details-container #image-details { 
+    padding: 10px;
+    max-height: 75%;
+    overflow: auto;
+}
+
 span.clear { 
     display:block;
     clear:both;
     font-size:0;
     line-height:0;
 }
+
+input[type=text], textarea {
+    background-color: rgba(187,210,224,0.6);
+    border: 1px solid white;
+    color: white;
+}
+
+textarea { 
+    font-family: sans-serif; 
+    height: 10em; 
+}
+
+::-webkit-scrollbar {
+    width: 12px;
+}
+ 
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(187,210,224,0.8); 
+}
+ 
+::-webkit-scrollbar-thumb {
+    background-color: rgba(187,210,224,0.4);
+    -webkit-box-shadow: inset 0 0 6px rgba(187,210,224,0.6); 
+}	
+

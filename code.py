@@ -12,7 +12,8 @@ import web, web.webopenid
 
 URLS = (
     '/', 'views.home.root',
-    '/gallery/(.+)', 'views.gallery.root'
+    '/gallery/(.+)', 'views.gallery.root',
+    '/api/image/metadata/(.+)', 'api.image.metadata'
 )
 
 web_app = web.application(URLS, globals())
