@@ -28,7 +28,10 @@ $(document).ready(function() {
         $("#image-id").val(srcSplit[srcSplit.length - 1]);
         $.ajax({
             type: 'GET',
-            url: '/api/image/metadata/' + $("#gallery-id").val() + '/' + $("#collection-id").val() + '/' + $("#image-id").val(),
+            url: api.basedir + '/api/image/metadata/' + 
+                $("#gallery-id").val() + '/' + 
+                $("#collection-id").val() + '/' + 
+                $("#image-id").val(),
             success: getDetails
         });
         $('#image-details').show();
@@ -83,7 +86,7 @@ $(document).ready(function() {
             }
             $.ajax({
                 type: 'POST',
-                url: '/api/image/metadata/' + 
+                url: api.basedir + '/api/image/metadata/' + 
                     $("#gallery-id").val() + '/' +
                     $("#collection-id").val() + '/' +
                     $("#image-id").val() + '/' +
@@ -96,7 +99,6 @@ $(document).ready(function() {
                     $("#" + eleBaseName + "-edit").val($("#" + eleBaseName + "-edit").html());
                 }
             });
-            console.log("Return pressed");
         }
         
         $('#' + eleBaseName + '-edit').hide(200, function() { $('#' + eleBaseName).show(200); });
