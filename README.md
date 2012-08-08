@@ -5,7 +5,7 @@ A simple web.py based picture gallery operating solely on the file structure of 
 ## Quick Setup ##
 
 *   Checkout the repo
-*   Get the web.py, pythonmagick, and pyexiv2 packages. E.g., on ubuntu:
+*   Get the web.py, pythonmagick, and pyexiv2 (min version 0.3.2) packages. E.g., on ubuntu:
 
         sudo apt-get install python-webpy python-pythonmagick python-pyexiv2
 
