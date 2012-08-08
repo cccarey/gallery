@@ -70,6 +70,11 @@ $(document).ready(function() {
         });
     });
 
+    $('#title-label, #title').dblclick(function() {
+        $('#title-edit').val($("#image-id").val());
+        $(this).click();
+    });
+    
     $('#title-edit, #description-edit, #comment-edit').keyup(function(event) {
         if (event.keyCode != 13 && event.keyCode != 27) return;
         
@@ -102,12 +107,6 @@ $(document).ready(function() {
         }
         
         $('#' + eleBaseName + '-edit').hide(200, function() { $('#' + eleBaseName).show(200); });
-    });
-        
-    // TODO: complete or remove this    
-    $('.thumb').click(function() {
-        $(this).toggleClass("lock");
-        return false;
     });
 });
 

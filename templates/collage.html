@@ -1,4 +1,4 @@
-$def with (gallery, collection)
+$def with (gallery, collection, collection_name)
 <html>
 	<head>
 		<title>Collection</title>
@@ -17,7 +17,9 @@ $def with (gallery, collection)
 	    <div id="collage" class="yui3-g">
 		    <div id="images" class="yui3-u-5-6">
 		    $for image in collection:
-			    <img src="$image['thumb']" alt="" title="" class="thumb" />
+			    <a href="${basedir}/gallery/${gallery}/collection/simple/${collection_name}/$image['name']">
+			        <img src="$image['thumb']" alt="" title="" class="thumb" />
+		        </a>
 		    </div>				
 		    <div id="image-details-container" class="yui3-u-1-6">
 		        <div id="image-details" class="box" style="display:none;">
@@ -31,7 +33,7 @@ $def with (gallery, collection)
 		            <textarea id="description-edit" name="description-edit" value="" style="display:none;"></textarea>
 		            <span id="description" class="value"></span>
 		            <span id="comment-label" class="label">Comment</span>
-		            <input type="text" id="comment-edit" name="comment-edit" value="" style="display:none;" />
+		            <textarea id="comment-edit" name="comment-edit" value="" style="display:none;"></textarea>
 		            <span id="comment" class="value"></span>
 		            <span class="label">Rating</span>
 		            <span id="rating" class="value"></span>

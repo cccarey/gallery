@@ -44,5 +44,5 @@ class root:
     def collage(self, gallery_name, gallery_split):
         collection_name = gallery_split[3]
         gallery = Gallery(gallery_name)
-        return render.collage(gallery_name, gallery.get_images(collection_name))
+        return render.collage(gallery_name, gallery.get_images(collection_name), collection_name)
 
