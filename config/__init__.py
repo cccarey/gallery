@@ -12,3 +12,8 @@ IMAGE_PATHS = {
 }
 
 THUMB_WIDTH = 125
+
+GALLERIES_CACHE_LIFE = 3600 # in seconds
+
+# db = web.database(dbn="sqlite", db="images.db")
+
