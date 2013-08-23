@@ -8,7 +8,7 @@ os.chdir(abspath)
 # name of this file
 os.environ['REAL_SCRIPT_NAME'] = ''
 
-import web, web.webopenid
+import web
 
 URLS = (
     '/', 'views.home.root',
