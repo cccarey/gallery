@@ -12,12 +12,17 @@ import web
 
 URLS = (
     '/', 'views.home.root',
+    '/', 'views.gallery.scan',
     '/gallery/(.+)', 'views.gallery.root',
     '/api/image/metadata/(.+)', 'api.image.metadata'
 )
 
 web_app = web.application(URLS, globals())
     
+import config
+from config.updateDB import UpdateDB
+dbUpdate = UpdateDB(config.DB)
+
 if __name__ == "__main__": 
     web_app.run()
 

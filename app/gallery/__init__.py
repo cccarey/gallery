@@ -1,5 +1,7 @@
 import os, mimetypes, datetime, PythonMagick, json, time
 
+import models.gallery
+
 from config import THUMB_WIDTH, BASEDIR, IMAGE_PATHS, GALLERIES_CACHE_LIFE
 
 class Gallery:
@@ -20,18 +22,13 @@ class Gallery:
         return '/'.join(pathEle)
 
     def get_galleries(self):
-        galleries = None
-        if os.path.exists('galleries.json') and (time.time() - os.path.getmtime('galleries.json') < GALLERIES_CACHE_LIFE):
-            galleries_store = open('galleries.json', 'r')
-            try:
-                galleries = json.load(galleries_store)
-            except:
-                pass
-            finally:
-                galleries_store.close()
+        galleries = models.gallery.read()
             
-        if galleries is not None: return galleries
-            
+        if galleries is None: galleries = self.scan()
+        
+        return galleries
+
+    def scan(self):
         galleries = []
         for dir in self.dirs:
             if os.path.isdir(self.get_disk_path(dir)):
@@ -44,9 +41,9 @@ class Gallery:
                     'cover_thumb': gallery.get_gallery_cover_thumbnail(),
                     'last_update': counts[2]
                     })
-        galleries_store = open('galleries.json', 'w')
-        json.dump(galleries, galleries_store, indent=2)
-        galleries_store.close()
+                    
+        models.gallery.save(galleries)
+        
         return galleries
     
     def get_counts(self, dir=None):
