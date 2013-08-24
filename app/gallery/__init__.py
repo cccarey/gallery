@@ -2,7 +2,7 @@ import os, mimetypes, datetime, PythonMagick, json, time
 
 import models.gallery
 
-from config import THUMB_WIDTH, BASEDIR, IMAGE_PATHS, GALLERIES_CACHE_LIFE
+from config import THUMB_WIDTH, BASEDIR, IMAGE_PATHS
 
 class Gallery:
     def __init__(self, gallery):
