@@ -12,7 +12,7 @@ import web
 
 URLS = (
     '/', 'views.home.root',
-    '/', 'views.gallery.scan',
+    '/scan', 'views.home.scan',
     '/gallery/(.+)', 'views.gallery.root',
     '/api/image/metadata/(.+)', 'api.image.metadata'
 )

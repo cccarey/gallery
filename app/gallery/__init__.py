@@ -42,6 +42,7 @@ class Gallery:
                     'last_update': counts[2]
                     })
                     
+        models.gallery.clear()
         models.gallery.save(galleries)
         
         return galleries

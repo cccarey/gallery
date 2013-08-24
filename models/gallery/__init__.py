@@ -2,6 +2,9 @@ from config import DB
 
 from models import *
 
+def clear():
+    DB.query('delete from galleries')
+    
 def save(model):
     for item in model:
         DB.insert(
