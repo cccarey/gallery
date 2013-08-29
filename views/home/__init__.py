@@ -8,7 +8,7 @@ render = config.render
 class scan:
     def GET(self):
         Gallery('').scan()
-        raise web.seeother('.')
+        raise web.seeother(config.BASEDIR)
         
 class root:
     def GET(self):
