@@ -17,7 +17,7 @@ def save(model):
         )
 
 def read():
-    results = list(DB.select('galleries'))
+    results = list(DB.select('galleries',order="last_update desc"))
     if len(results) == 0: return None
     return results
 
